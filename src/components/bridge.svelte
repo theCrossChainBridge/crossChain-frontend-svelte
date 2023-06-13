@@ -3,7 +3,7 @@
     import { abi, address, token_addr } from "./contract";
     import { ethers } from "ethers";
     import type { Contract } from "ethers";
-    import { tx_hash, showProgress } from "../store/store";
+    import { return_1, return_2, showProgress } from "../store/store";
 
     let from = "Sepolia";
     let to = "Mumbai";
@@ -36,7 +36,7 @@
                 From: {from}
             </div>
             <div class="input_box">
-                <div class="coin">Eth</div>
+                <div class="coin">Token</div>
                 <input
                     type="text"
                     class="addr_input"
@@ -59,10 +59,12 @@
             </div>
             <div class="loader">
                 {#if $showProgress}
-                    <Loader variant="bars" />
+                    <div>It may take some time...</div>
+                    <div class="load"><Loader variant="bars" /></div>
                 {/if}
             </div>
-            <p class="hash">{$tx_hash}</p>
+            <p class="hash">{$return_1}</p>
+            <p class="hash">{$return_2}</p>
         </div>
         <div class="transfer">
             <Button
@@ -130,7 +132,7 @@
         background-color: white;
     }
     .coin {
-        color: rgb(78, 5, 100);
+        color: rgb(49, 3, 63);
         margin-left: 10px;
     }
     .addr_input {
@@ -178,7 +180,12 @@
     }
     .loader {
         margin: auto;
-        width: 10%;
+        width: 50%;
+        color: deeppink;
+    }
+    .load {
+        margin: auto;
+        width: 20%;
     }
     .hash {
         overflow: auto;

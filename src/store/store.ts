@@ -7,8 +7,12 @@ interface WebSocketStore extends Writable<WebSocket | null> {
     sendMessage: (data: string | ArrayBuffer | Blob | ArrayBufferView) => void;
 }
 
-export const tx_hash = writable<string>("");
+export const eth_tx_hash = writable<string>("");
+export const matic_tx_hash = writable<string>("");
 export const showProgress = writable<boolean>(false);
+
+export const return_1 = writable<string>("");
+export const return_2 = writable<string>("");
 
 function createWebSocketStore(): WebSocketStore {
     const { subscribe, set, update } = writable<WebSocket | null>(null);
@@ -22,7 +26,11 @@ function createWebSocketStore(): WebSocketStore {
         });
 
         ws.addEventListener('message', (event) => {
-            tx_hash.set(event.data);
+            const msg = event.data.split(" ")
+            eth_tx_hash.set(msg[0]);
+            return_1.set("Sepolia: " + msg[0]);
+            matic_tx_hash.set(msg[1]);
+            return_2.set("Mumbai: " + msg[1]);
             showProgress.set(false);
         }
         );
